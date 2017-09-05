@@ -5,11 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 
-public interface RecipeRepository {
-	
-	@Repository
-	public interface ActorRepository extends JpaRepository<Recipe, Long> {
-
-	}
+@Repository
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
 }
