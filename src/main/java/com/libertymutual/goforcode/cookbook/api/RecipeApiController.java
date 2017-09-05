@@ -15,6 +15,7 @@ import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -28,9 +29,20 @@ public class RecipeApiController {
 	}
 	
 	
+	@ApiOperation(value="Get all recipes")	
 	@GetMapping("")
 	public List<Recipe> getAll() {
 		return recipeRepo.findAll();
+	}
+	
+	@ApiOperation(value="Get a recipe by its Id")	
+	@GetMapping("{id}") // naming {id} the same as pathvariable connects them
+	public Recipe getOne(@PathVariable long id) throws StuffNotFoundException {
+		Recipe recipe = recipeRepo.findOne(id);
+		if (recipe == null) {
+			throw new StuffNotFoundException();
+		}
+		return recipe;
 	}
 
 }
