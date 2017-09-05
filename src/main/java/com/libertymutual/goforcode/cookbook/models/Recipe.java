@@ -30,11 +30,11 @@ public class Recipe {
 	private String description;
 	
 	@Column(nullable=false)
-	private double minutes;
-	
+	private String minutes;
+	 
 	public Recipe() {}
 	
-	public Recipe(String title, String description, double minutes) {
+	public Recipe(String title, String description, String minutes) {
 		this.title = title;
 		this.description = description;
 		this.minutes = minutes;
@@ -64,11 +64,11 @@ public class Recipe {
 		this.description = description;
 	}
 
-	public double getMinutes() {
+	public String getMinutes() {
 		return minutes;
 	}
 
-	public void setMinutes(double minutes) {
+	public void setMinutes(String minutes) {
 		this.minutes = minutes;
 	}
 	

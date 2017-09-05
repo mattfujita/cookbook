@@ -14,28 +14,25 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import org.junit.Test;
 
-public class RecipeTests {
+public class IngredientsTests {
 	
-	Recipe recipe;
+	Ingredients ingredients; 
 	
 	@Before
 	public void setUp() {
-		recipe = new Recipe();
+		ingredients = new Ingredients();
 	}
 
 	@Test
 	public void test_all_getters_and_setters() {
-		new BeanTester().testBean(Recipe.class);
+		new BeanTester().testBean(Ingredients.class);
 	}
 	
 	@Test
 	public void test_recipe_constructor() {
-		Recipe recipe = new Recipe("Spaghetti", "How to make some spaghetti", "30");
+		Ingredients ingredients = new Ingredients("Tomatoes");
 		
-		assertThat(recipe.getTitle()).isEqualTo("Spaghetti");
-		assertThat(recipe.getDescription()).isEqualTo("How to make some spaghetti");
-		assertThat(recipe.getMinutes()).isEqualTo("30");
+		assertThat(ingredients.getIngredientName()).isEqualTo("Tomatoes");
 		
 	}
-
 }
