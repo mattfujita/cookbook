@@ -1,10 +1,13 @@
 package com.libertymutual.goforcode.cookbook.models;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class Instructions {
 	
 	@Id
@@ -16,6 +19,9 @@ public class Instructions {
 	
 	@Column(nullable=false, length = 255)
 	private String instructionText;
+	
+	@ManyToOne
+	Recipe recipe;
 	
 	public Instructions() {}
 	
