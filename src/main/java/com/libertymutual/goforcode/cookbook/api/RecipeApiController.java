@@ -35,14 +35,20 @@ public class RecipeApiController {
 		return recipeRepo.findAll();
 	}
 	
-//	@ApiOperation(value="Get a recipe by its Id")	
-//	@GetMapping("{id}") // naming {id} the same as pathvariable connects them
-//	public Recipe getOne(@PathVariable long id) throws StuffNotFoundException {
-//		Recipe recipe = recipeRepo.findOne(id);
-//		if (recipe == null) {
-//			throw new StuffNotFoundException();
-//		}
-//		return recipe;
-//	}
+	@ApiOperation(value="Get a recipe by its Id")	
+	@GetMapping("{id}") // naming {id} the same as pathvariable connects them
+	public Recipe getOne(@PathVariable long id) throws StuffNotFoundException {
+		Recipe recipe = recipeRepo.findOne(id);
+		if (recipe == null) {
+			throw new StuffNotFoundException();
+		}
+		return recipe;
+	}
+	
+	@PostMapping("") // @RequestBody will bind any JSON object cereal variable
+	public Recipe create(@RequestBody Recipe recipe) {
+		return recipeRepo.save(recipe);
+	}
+
 
 }
