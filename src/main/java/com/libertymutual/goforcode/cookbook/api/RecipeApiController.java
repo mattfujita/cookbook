@@ -32,6 +32,7 @@ public class RecipeApiController {
 	public RecipeApiController(RecipeRepository recipeRepo, IngredientsRepo ingredientsRepo) {
 		this.recipeRepo = recipeRepo;
 		this.ingredientsRepo = ingredientsRepo;
+		
 	}
 	
 	
