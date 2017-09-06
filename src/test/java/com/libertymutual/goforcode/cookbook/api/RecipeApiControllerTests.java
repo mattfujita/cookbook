@@ -17,11 +17,13 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
+import com.libertymutual.goforcode.cookbook.services.InstructionsRepository;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
 public class RecipeApiControllerTests {
 	private RecipeRepository recipeRepo;
 	private IngredientsRepo ingredientsRepo;
+	private InstructionsRepository instructionsRepo;
 	private RecipeApiController recipeController;
 
 	
@@ -30,7 +32,7 @@ public class RecipeApiControllerTests {
 	public void setUp() {
 		//use mock to tell it what you want to happen; verify down below
 		recipeRepo = mock(RecipeRepository.class);
-		recipeController = new RecipeApiController(recipeRepo, ingredientsRepo);
+		recipeController = new RecipeApiController(recipeRepo, ingredientsRepo, instructionsRepo);
 	}
 	
 	@Test

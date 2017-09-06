@@ -105,5 +105,18 @@ public class RecipeApiController {
 
 		return recipe;
 	}
+	
+	@DeleteMapping("{id}/ingredients/{ing_id}")
+	@ApiOperation(value="Delete ingredient from recipe", notes = "This will delete a new instruction to the specified recipe.")
+	public Recipe deleteIngredient(@PathVariable long id, @PathVariable long ing_id) {
+		try {
+			Recipe recipe = recipeRepo.findOne(id);
+			ingredientsRepo.delete(ing_id);
+			return recipe;
+		} catch (EmptyResultDataAccessException erdae) {
+			return null;
+		}
+		
+	}
 
 }
