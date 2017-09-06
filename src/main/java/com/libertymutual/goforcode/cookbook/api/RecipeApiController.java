@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.libertymutual.goforcode.cookbook.models.Ingredients;
 import com.libertymutual.goforcode.cookbook.models.Instructions;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
+import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
 import io.swagger.annotations.Api;
@@ -26,9 +27,11 @@ import io.swagger.annotations.ApiOperation;
 public class RecipeApiController {
 	
 	private RecipeRepository recipeRepo;
+	private IngredientsRepo ingredientsRepo;
 	
-	public RecipeApiController(RecipeRepository recipeRepo) {
+	public RecipeApiController(RecipeRepository recipeRepo, IngredientsRepo ingredientsRepo) {
 		this.recipeRepo = recipeRepo;
+		this.ingredientsRepo = ingredientsRepo;
 	}
 	
 	
@@ -79,7 +82,7 @@ public class RecipeApiController {
 	@ApiOperation(value="Create new ingredient for recipe", notes = "This will add a new ingredient to the specified recipe.")
 	public Recipe associateAnIngredient(@RequestBody Ingredients ingredient, @PathVariable long id) {
 		Recipe recipe = recipeRepo.findOne(id);
-		recipe= recipeRepo.findOne(recipe.getId());
+		ingredient = ingredientsRepo.save(ingredient);
 		
 		recipe.addIngredient(ingredient);
 		recipeRepo.save(recipe);
@@ -91,7 +94,6 @@ public class RecipeApiController {
 	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
 	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
 		Recipe recipe = recipeRepo.findOne(id);
-		recipe= recipeRepo.findOne(recipe.getId());
 		
 		recipe.addInstruction(instruction);
 		recipeRepo.save(recipe);
