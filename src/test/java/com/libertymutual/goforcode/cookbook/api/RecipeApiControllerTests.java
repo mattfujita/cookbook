@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import com.libertymutual.goforcode.cookbook.models.Ingredients;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
 import com.libertymutual.goforcode.cookbook.services.InstructionsRepository;
@@ -132,6 +133,20 @@ public class RecipeApiControllerTests {
 		assertThat(actualRecipe.getId()).isSameAs(recipe.getId()); //test that id was updated	
 		verify(recipeRepo).save(recipe); //verify that method got called with this exact argument		
 	}	
+	
+	@Test
+	public void test_that_you_can_add_ingredient_to_recipe() {
+		Recipe recipe = new Recipe();
+		Ingredients ingredient = new Ingredients();
+		when(recipeRepo.findOne(12L)).thenReturn(recipe);
+		
+		Recipe result = recipeController.associateAnIngredient(ingredient, 12L);
+		
+		assertThat(result.getId()).isSameAs(recipe);
+		verify(recipeRepo).findOne(12L);
+		verify(recipeRepo).save(recipe);
+		
+	}
 }
 	
 

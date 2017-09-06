@@ -96,7 +96,7 @@ public class RecipeApiController {
 	
 	@PostMapping("{id}/instructions")
 	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
-	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
+	public Recipe associateAnInstruction(@RequestBody Instructions instruction, @PathVariable long id) {
 		Recipe recipe = recipeRepo.findOne(id);
 		instruction.setRecipe(recipe);
 		instruction = instructionRepo.save(instruction);
