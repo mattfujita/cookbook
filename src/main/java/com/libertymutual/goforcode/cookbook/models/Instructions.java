@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -25,6 +28,7 @@ public class Instructions {
 	@Column(nullable=false, length = 255)
 	private String instructionText;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	Recipe recipe;
 	
