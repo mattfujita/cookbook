@@ -118,5 +118,18 @@ public class RecipeApiController {
 		}
 		
 	}
+	
+	@DeleteMapping("{id}/instructions/{ins_id}")
+	public Recipe deleteInstruction(@PathVariable long id, @PathVariable long ins_id) {
+		try {
+			Recipe recipe = recipeRepo.findOne(id);
+			instructionRepo.delete(ins_id);		
+			return recipe;
+			
+		} catch (EmptyResultDataAccessException erdae) {
+			System.err.println("trying to re-delete an id");
+			return null;
+		}
+	}
 
 }
