@@ -28,7 +28,6 @@ public class Instructions {
 	@Column(nullable=false, length = 255)
 	private String instructionText;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	Recipe recipe;
 	

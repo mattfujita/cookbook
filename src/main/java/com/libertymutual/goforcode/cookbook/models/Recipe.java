@@ -39,6 +39,7 @@ public class Recipe {
 	@OneToMany(mappedBy="recipes")
 	private List<Ingredients> ingredients;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="recipe")
 	private List<Instructions> instructions;
 	 
