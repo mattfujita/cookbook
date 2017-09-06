@@ -3,6 +3,7 @@ package com.libertymutual.goforcode.cookbook.api;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +30,13 @@ public class RecipeApiController {
 	}
 	
 	
-	@ApiOperation(value="Get all recipes")	
+	@ApiOperation(value="Get a list of all of the recipes")	
 	@GetMapping("")
 	public List<Recipe> getAll() {
 		return recipeRepo.findAll();
 	}
 	
-	@ApiOperation(value="Get a recipe by its Id")	
+	@ApiOperation(value="Get the details of a single recipe by its id")	
 	@GetMapping("{id}") // naming {id} the same as pathvariable connects them
 	public Recipe getOne(@PathVariable long id) throws StuffNotFoundException {
 		Recipe recipe = recipeRepo.findOne(id);
@@ -45,10 +46,31 @@ public class RecipeApiController {
 		return recipe;
 	}
 	
-	@PostMapping("") // @RequestBody will bind any JSON object cereal variable
+	@ApiOperation(value="Create a new recipe. Provide a the title, description, "
+						+ "and # of minutes at minimum. Do not provide an id.")	
+	@PostMapping("")
 	public Recipe create(@RequestBody Recipe recipe) {
 		return recipeRepo.save(recipe);
 	}
 
+	@ApiOperation(value="Delete the recipe with the given id")	
+	@DeleteMapping("{id}")
+	public Recipe delete(@PathVariable long id) {
+		try {
+			Recipe recipe = recipeRepo.findOne(id);
+			recipeRepo.delete(id);
+			return recipe;
+		} catch (EmptyResultDataAccessException erdae) {
+			System.err.println("Could not find id to delete.");
+			return null;
+		}
+	}
+	
+	@ApiOperation(value="Update the title, description, and # of minutes for a recipe")
+	@PutMapping("{id}")
+	public Recipe update(@RequestBody Recipe recipe, @PathVariable long id){
+		recipe.setId(id);
+		return recipeRepo.save(recipe);
+	}
 
 }
