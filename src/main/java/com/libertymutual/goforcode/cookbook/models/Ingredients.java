@@ -36,6 +36,12 @@ public class Ingredients {
 	public Ingredients(String ingredientName) {
 		this.ingredientName = ingredientName;
 	}
+	
+	public Ingredients(String ingredientName, String measureUnit, String ingredientQuantity) {
+		this.ingredientName = ingredientName;
+		this.measureUnit = measureUnit;
+		this.ingredientQuantity = ingredientQuantity;
+	}
 
 	public String getIngredientName() {
 		return ingredientName; 
