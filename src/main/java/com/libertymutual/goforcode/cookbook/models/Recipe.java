@@ -32,7 +32,7 @@ public class Recipe {
 	@Column(nullable=false)
 	private String minutes;
 	
-	@ManyToMany(mappedBy="recipes")
+	@OneToMany(mappedBy="recipes")
 	private List<Ingredients> ingredients;
 	
 	@OneToMany(mappedBy="recipe")

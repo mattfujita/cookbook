@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -28,8 +29,8 @@ public class Ingredients {
 	
 	private String ingredientQuantity;
 	
-	@ManyToMany
-	private List<Recipe> recipes;
+	@ManyToOne
+	private Recipe recipes;
 	
 	public Ingredients() {}
 	
@@ -69,11 +70,11 @@ public class Ingredients {
 		this.id = id;
 	}
 
-	public List<Recipe> getRecipes() {
+	public Recipe getRecipes() {
 		return recipes;
 	}
 
-	public void setRecipes(List<Recipe> recipes) {
+	public void setRecipes(Recipe recipes) {
 		this.recipes = recipes;
 	}
 

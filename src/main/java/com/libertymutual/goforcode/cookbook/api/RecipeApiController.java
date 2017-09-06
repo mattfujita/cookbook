@@ -16,6 +16,7 @@ import com.libertymutual.goforcode.cookbook.models.Ingredients;
 import com.libertymutual.goforcode.cookbook.models.Instructions;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
+import com.libertymutual.goforcode.cookbook.services.InstructionsRepository;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
 import io.swagger.annotations.Api;
@@ -28,10 +29,12 @@ public class RecipeApiController {
 	
 	private RecipeRepository recipeRepo;
 	private IngredientsRepo ingredientsRepo;
+	private InstructionsRepository instructionRepo;
 	
-	public RecipeApiController(RecipeRepository recipeRepo, IngredientsRepo ingredientsRepo) {
+	public RecipeApiController(RecipeRepository recipeRepo, IngredientsRepo ingredientsRepo, InstructionsRepository instructionRepo) {
 		this.recipeRepo = recipeRepo;
 		this.ingredientsRepo = ingredientsRepo;
+		this.instructionRepo = instructionRepo;
 		
 	}
 	
@@ -83,10 +86,10 @@ public class RecipeApiController {
 	@ApiOperation(value="Create new ingredient for recipe", notes = "This will add a new ingredient to the specified recipe.")
 	public Recipe associateAnIngredient(@RequestBody Ingredients ingredient, @PathVariable long id) {
 		Recipe recipe = recipeRepo.findOne(id);
+		ingredient.setRecipes(recipe);
 		ingredient = ingredientsRepo.save(ingredient);
 		
 		recipe.addIngredient(ingredient);
-		recipeRepo.save(recipe);
 
 		return recipe;
 	}
@@ -95,9 +98,10 @@ public class RecipeApiController {
 	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
 	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
 		Recipe recipe = recipeRepo.findOne(id);
+		instruction.setRecipe(recipe);
+		instruction = instructionRepo.save(instruction);
 		
 		recipe.addInstruction(instruction);
-		recipeRepo.save(recipe);
 
 		return recipe;
 	}
