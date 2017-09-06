@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.libertymutual.goforcode.cookbook.models.Ingredients;
+import com.libertymutual.goforcode.cookbook.models.Instructions;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
@@ -72,5 +74,29 @@ public class RecipeApiController {
 		recipe.setId(id);
 		return recipeRepo.save(recipe);
 	}
+	
+//	@PostMapping("{id}/ingredients")
+//	@ApiOperation(value="Create new ingredient for recipe", notes = "This will add a new ingredient to the specified recipe.")
+//	public Recipe associateAnIngredient(@RequestBody Ingredients ingredient, @PathVariable long id) {
+//		Recipe recipe = recipeRepo.findOne(id);
+//		recipe= recipeRepo.findOne(recipe.getId());
+//		
+//		recipe.addIngredient(ingredient);
+//		recipeRepo.save(recipe);
+//
+//		return recipe;
+//	}
+//	
+//	@PostMapping("{id}/instructions")
+//	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
+//	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
+//		Recipe recipe = recipeRepo.findOne(id);
+//		recipe= recipeRepo.findOne(recipe.getId());
+//		
+//		recipe.addInstruction(instruction);
+//		recipeRepo.save(recipe);
+//
+//		return recipe;
+//	}
 
 }

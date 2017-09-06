@@ -78,4 +78,34 @@ public class Recipe {
 		this.minutes = minutes;
 	}
 	
+	public void addIngredient(Ingredients ingredient) {
+		if(ingredients == null) {
+			ingredients = new ArrayList<Ingredients>();
+		}
+		ingredients.add(ingredient);
+	}
+	
+	public void addInstruction(Instructions instruction) {
+		if(instructions == null) {
+			instructions = new ArrayList<Instructions>();
+		}
+		instructions.add(instruction);
+	}
+
+	public List<Ingredients> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredients> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public List<Instructions> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instructions> instructions) {
+		this.instructions = instructions;
+	}
+	
 }
