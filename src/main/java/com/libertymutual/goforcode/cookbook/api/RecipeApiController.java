@@ -75,28 +75,28 @@ public class RecipeApiController {
 		return recipeRepo.save(recipe);
 	}
 	
-//	@PostMapping("{id}/ingredients")
-//	@ApiOperation(value="Create new ingredient for recipe", notes = "This will add a new ingredient to the specified recipe.")
-//	public Recipe associateAnIngredient(@RequestBody Ingredients ingredient, @PathVariable long id) {
-//		Recipe recipe = recipeRepo.findOne(id);
-//		recipe= recipeRepo.findOne(recipe.getId());
-//		
-//		recipe.addIngredient(ingredient);
-//		recipeRepo.save(recipe);
-//
-//		return recipe;
-//	}
-//	
-//	@PostMapping("{id}/instructions")
-//	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
-//	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
-//		Recipe recipe = recipeRepo.findOne(id);
-//		recipe= recipeRepo.findOne(recipe.getId());
-//		
-//		recipe.addInstruction(instruction);
-//		recipeRepo.save(recipe);
-//
-//		return recipe;
-//	}
+	@PostMapping("{id}/ingredients")
+	@ApiOperation(value="Create new ingredient for recipe", notes = "This will add a new ingredient to the specified recipe.")
+	public Recipe associateAnIngredient(@RequestBody Ingredients ingredient, @PathVariable long id) {
+		Recipe recipe = recipeRepo.findOne(id);
+		recipe= recipeRepo.findOne(recipe.getId());
+		
+		recipe.addIngredient(ingredient);
+		recipeRepo.save(recipe);
+
+		return recipe;
+	}
+	
+	@PostMapping("{id}/instructions")
+	@ApiOperation(value="Create new instruction for recipe", notes = "This will add a new instruction to the specified recipe.")
+	public Recipe associateAnIngredient(@RequestBody Instructions instruction, @PathVariable long id) {
+		Recipe recipe = recipeRepo.findOne(id);
+		recipe= recipeRepo.findOne(recipe.getId());
+		
+		recipe.addInstruction(instruction);
+		recipeRepo.save(recipe);
+
+		return recipe;
+	}
 
 }
