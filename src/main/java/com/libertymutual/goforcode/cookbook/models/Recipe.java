@@ -35,6 +35,8 @@ public class Recipe {
 	@Column(nullable=false)
 	private String minutes;
 	
+	private String pictureURL;
+	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="recipes")
 	private List<Ingredient> ingredients;
@@ -111,6 +113,14 @@ public class Recipe {
 
 	public void setInstructions(List<Instruction> instructions) {
 		this.instructions = instructions;
+	}
+
+	public String getPictureURL() {
+		return pictureURL;
+	}
+
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
 	}
 	
 }
