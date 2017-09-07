@@ -133,7 +133,6 @@ public class RecipeApiController {
 			return recipe;
 			
 		} catch (EmptyResultDataAccessException erdae) {
-			System.err.println("trying to re-delete an id");
 			return null;
 		}
 	}

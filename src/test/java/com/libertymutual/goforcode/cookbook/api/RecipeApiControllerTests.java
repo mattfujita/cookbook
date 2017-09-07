@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.libertymutual.goforcode.cookbook.models.Ingredients;
+import com.libertymutual.goforcode.cookbook.models.Instructions;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
 import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
 import com.libertymutual.goforcode.cookbook.services.InstructionsRepository;
@@ -47,13 +48,25 @@ public class RecipeApiControllerTests {
 		when(recipeRepo.findAll()).thenReturn(recipes);
 	
 		// Act
-		List<Recipe> actual = recipeController.getAll();
+		List<Recipe> actual = recipeController.getAll(null);
 		
 		// Assert
 		assertThat(actual.size()).isEqualTo(2);
 		assertThat(actual.get(0)).isSameAs(recipes.get(0));
 		verify(recipeRepo).findAll(); //verify that mock is the mock you've created with mockito
 									//and method findAll() has been called;	
+	}
+	
+	@Test
+	public void test_getAll_creates_new_returnList_when_title_of_recipe_is_passed() {
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		recipes.add(new Recipe("something", "good", "30"));
+		when(recipeRepo.findByTitleContaining("something")).thenReturn(recipes);
+		
+		List<Recipe> result = recipeController.getAll("something");
+		
+		assertThat(result).isSameAs(recipes);
+		
 	}
 	
 	@Test
@@ -74,7 +87,7 @@ public class RecipeApiControllerTests {
 	//expectation for this test is an exception is thrown; we need to catch one
 	public void test_getOne_throws_StuffNotFound_when_no_Recipe_returned_from_repo() {
 		try {
-			recipeController.getOne(1);
+			recipeController.getOne(1L);
 			//asserting that this failed
 			fail("The recipeController did not throw the StuffNotFoundException");	
 		} catch(StuffNotFoundException snfe) {}
@@ -136,19 +149,87 @@ public class RecipeApiControllerTests {
 		verify(recipeRepo).save(recipe); //verify that method got called with this exact argument		
 	}	
 	
-//	@Test
-//	public void test_that_you_can_add_ingredient_to_recipe() {
+	@Test
+	public void test_that_you_can_add_ingredient_to_recipe() {
+		Recipe recipe = new Recipe();
+		Ingredients ingredient = new Ingredients();
+		ingredient.setRecipes(recipe);
+		when(recipeRepo.findOne(12L)).thenReturn(recipe);
+		
+		Recipe result = recipeController.associateAnIngredient(ingredient, 12L);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(12L);
+		verify(ingredientsRepo).save(ingredient);
+		
+	}
+	
+	@Test
+	public void test_that_you_can_add_instruction_to_recipe() {
+		Recipe recipe = new Recipe();
+		Instructions instruction = new Instructions();
+		instruction.setRecipe(recipe);
+		when(recipeRepo.findOne(13L)).thenReturn(recipe);
+		
+		Recipe result = recipeController.associateAnInstruction(instruction, 13L);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(13L);
+		verify(instructionsRepo).save(instruction);
+		
+	}
+	
+	@Test
+	public void test_deletion_of_ingredient_from_recipe() {
+		Recipe recipe = new Recipe();
+		Ingredients ingredient = new Ingredients();
+		when(recipeRepo.findOne(9L)).thenReturn(recipe);
+		when(ingredientsRepo.findOne(5L)).thenReturn(ingredient);
+		
+		Recipe result = recipeController.deleteIngredient(9L, 5L);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(9L);
+		verify(ingredientsRepo).delete(5L);
+		
+	}
+	
+	@Test
+	public void test_delete_EmptyResultDataAccessException_when_no_ingredient_found( ) {
+		
+		when(ingredientsRepo.findOne(10L)).thenThrow(new EmptyResultDataAccessException(0));
+		
+		Recipe result = recipeController.delete(10L);
+		
+		assertThat(result).isNull();
+		verify(recipeRepo).findOne(10L);
+	}
+	
+	@Test
+	public void test_deletion_of_instruction_from_recipe() {
+		Recipe recipe = new Recipe();
+		Instructions instruction = new Instructions();
+		when(recipeRepo.findOne(6L)).thenReturn(recipe);
+		when(instructionsRepo.findOne(7L)).thenReturn(instruction);
+		
+		Recipe result = recipeController.deleteInstruction(6L, 7L);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(6L);
+		verify(instructionsRepo).delete(7L);
+	}
+	
+	@Test
+	public void test_delete_EmptyResultDataAccessException_when_no_instruction_found( ) {
 //		Recipe recipe = new Recipe();
-//		Ingredients ingredient = new Ingredients();
-//		when(recipeRepo.findOne(12L)).thenReturn(recipe);
-//		
-//		Recipe result = recipeController.associateAnIngredient(ingredient, 12L);
-//		
-//		assertThat(result.getId()).isSameAs(recipe.getId());
-////		verify(recipeRepo).findOne(12L);
-////		verify(recipeRepo).save(recipe);
-//		
-//	}
+//		when(recipeRepo.findOne(11L)).thenReturn(recipe);
+		when(instructionsRepo.findOne(12L)).thenThrow(new EmptyResultDataAccessException(0));
+		
+		Recipe result = recipeController.delete(12L);
+		
+		assertThat(result).isNull();
+		verify(recipeRepo).findOne(12L);
+	}
 }
 	
 
