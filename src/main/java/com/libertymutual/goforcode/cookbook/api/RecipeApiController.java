@@ -39,10 +39,16 @@ public class RecipeApiController {
 	}
 	
 	
-	@ApiOperation(value="Get a list of all of the recipes")	
+	@ApiOperation(value="Get a list of all of the recipes or search by title")	
 	@GetMapping("")
-	public List<Recipe> getAll() {
-		return recipeRepo.findAll();
+	public List<Recipe> getAll(String title) {
+		List<Recipe> returnList;
+		if (title != null) {
+			returnList = recipeRepo.findByTitleContaining(title);
+		} else {
+		returnList = recipeRepo.findAll();
+		}
+		return returnList;
 	}
 	
 	@ApiOperation(value="Get the details of a single recipe by its id")	
