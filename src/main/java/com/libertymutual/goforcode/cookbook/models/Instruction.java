@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 
 @Entity
-public class Instructions {
+public class Instruction {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,9 +31,9 @@ public class Instructions {
 	@ManyToOne
 	Recipe recipe;
 	
-	public Instructions() {}
+	public Instruction() {}
 	
-	public Instructions(int stepNumber, String instructionText) {
+	public Instruction(int stepNumber, String instructionText) {
 		this.stepNumber = stepNumber;
 		this.instructionText = instructionText;
 	}

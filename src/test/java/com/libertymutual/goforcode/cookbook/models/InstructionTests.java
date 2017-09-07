@@ -7,23 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-public class InstructionsTests {
+public class InstructionTests {
 	
-	Instructions instruction;
+	Instruction instruction;
 
 	@Before
 	public void setUp() {
-		instruction = new Instructions();
+		instruction = new Instruction();
 	}
 
 	@Test
 	public void test_all_getters_and_setters() {
-		new BeanTester().testBean(Instructions.class);
+		new BeanTester().testBean(Instruction.class);
 	}
 	
 	@Test
 	public void test_instruction_constructor() {
-		Instructions instruction = new Instructions(1, "some instruction");
+		Instruction instruction = new Instruction(1, "some instruction");
 		
 		assertThat(instruction.getStepNumber()).isEqualTo(1);
 		assertThat(instruction.getInstructionText()).isEqualTo("some instruction");

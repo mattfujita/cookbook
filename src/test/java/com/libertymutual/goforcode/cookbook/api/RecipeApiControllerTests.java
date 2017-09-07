@@ -15,17 +15,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.libertymutual.goforcode.cookbook.models.Ingredients;
-import com.libertymutual.goforcode.cookbook.models.Instructions;
+import com.libertymutual.goforcode.cookbook.models.Ingredient;
+import com.libertymutual.goforcode.cookbook.models.Instruction;
 import com.libertymutual.goforcode.cookbook.models.Recipe;
-import com.libertymutual.goforcode.cookbook.services.IngredientsRepo;
-import com.libertymutual.goforcode.cookbook.services.InstructionsRepository;
+import com.libertymutual.goforcode.cookbook.services.IngredientRepository;
+import com.libertymutual.goforcode.cookbook.services.InstructionRepository;
 import com.libertymutual.goforcode.cookbook.services.RecipeRepository;
 
 public class RecipeApiControllerTests {
 	private RecipeRepository recipeRepo;
-	private IngredientsRepo ingredientsRepo;
-	private InstructionsRepository instructionsRepo;
+	private IngredientRepository ingredientsRepo;
+	private InstructionRepository instructionsRepo;
 	private RecipeApiController recipeController;
 
 	
@@ -34,8 +34,8 @@ public class RecipeApiControllerTests {
 	public void setUp() {
 		//use mock to tell it what you want to happen; verify down below
 		recipeRepo = mock(RecipeRepository.class);
-		ingredientsRepo = mock(IngredientsRepo.class);
-		instructionsRepo = mock(InstructionsRepository.class);
+		ingredientsRepo = mock(IngredientRepository.class);
+		instructionsRepo = mock(InstructionRepository.class);
 		recipeController = new RecipeApiController(recipeRepo, ingredientsRepo, instructionsRepo);
 	}
 	
@@ -152,7 +152,7 @@ public class RecipeApiControllerTests {
 	@Test
 	public void test_that_you_can_add_ingredient_to_recipe() {
 		Recipe recipe = new Recipe();
-		Ingredients ingredient = new Ingredients();
+		Ingredient ingredient = new Ingredient();
 		ingredient.setRecipes(recipe);
 		when(recipeRepo.findOne(12L)).thenReturn(recipe);
 		
@@ -167,7 +167,7 @@ public class RecipeApiControllerTests {
 	@Test
 	public void test_that_you_can_add_instruction_to_recipe() {
 		Recipe recipe = new Recipe();
-		Instructions instruction = new Instructions();
+		Instruction instruction = new Instruction();
 		instruction.setRecipe(recipe);
 		when(recipeRepo.findOne(13L)).thenReturn(recipe);
 		
@@ -182,7 +182,7 @@ public class RecipeApiControllerTests {
 	@Test
 	public void test_deletion_of_ingredient_from_recipe() {
 		Recipe recipe = new Recipe();
-		Ingredients ingredient = new Ingredients();
+		Ingredient ingredient = new Ingredient();
 		when(recipeRepo.findOne(9L)).thenReturn(recipe);
 		when(ingredientsRepo.findOne(5L)).thenReturn(ingredient);
 		
@@ -208,7 +208,7 @@ public class RecipeApiControllerTests {
 	@Test
 	public void test_deletion_of_instruction_from_recipe() {
 		Recipe recipe = new Recipe();
-		Instructions instruction = new Instructions();
+		Instruction instruction = new Instruction();
 		when(recipeRepo.findOne(6L)).thenReturn(recipe);
 		when(instructionsRepo.findOne(7L)).thenReturn(instruction);
 		

@@ -37,11 +37,11 @@ public class Recipe {
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="recipes")
-	private List<Ingredients> ingredients;
+	private List<Ingredient> ingredients;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="recipe")
-	private List<Instructions> instructions;
+	private List<Instruction> instructions;
 	 
 	public Recipe() {}
 	
@@ -83,33 +83,33 @@ public class Recipe {
 		this.minutes = minutes;
 	}
 	
-	public void addIngredient(Ingredients ingredient) {
+	public void addIngredient(Ingredient ingredient) {
 		if(ingredients == null) {
-			ingredients = new ArrayList<Ingredients>();
+			ingredients = new ArrayList<Ingredient>();
 		}
 		ingredients.add(ingredient);
 	}
 	
-	public void addInstruction(Instructions instruction) {
+	public void addInstruction(Instruction instruction) {
 		if(instructions == null) {
-			instructions = new ArrayList<Instructions>();
+			instructions = new ArrayList<Instruction>();
 		}
 		instructions.add(instruction);
 	}
 
-	public List<Ingredients> getIngredients() {
+	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(List<Ingredients> ingredients) {
+	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
-	public List<Instructions> getInstructions() {
+	public List<Instruction> getInstructions() {
 		return instructions;
 	}
 
-	public void setInstructions(List<Instructions> instructions) {
+	public void setInstructions(List<Instruction> instructions) {
 		this.instructions = instructions;
 	}
 	
