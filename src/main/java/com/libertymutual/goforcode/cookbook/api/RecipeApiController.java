@@ -151,5 +151,20 @@ public class RecipeApiController {
 		}
 	}
 	
+	@ApiOperation(value="Update the instruction on a recipe")
+	@PutMapping("{id}/instructions/{ins_id}")
+	public Recipe updateInstruction(@PathVariable long id, @PathVariable long ins_id, @RequestBody Instruction instruction){
+		try {
+			Recipe recipe = recipeRepo.findOne(id);
+			instruction.setId(ins_id);
+			instruction.setRecipe(recipe);
+			instructionRepo.save(instruction);
+			
+			return recipe;
+			
+		} catch (EmptyResultDataAccessException erdae) {
+			return null;
+		}
+	}
 
 }
