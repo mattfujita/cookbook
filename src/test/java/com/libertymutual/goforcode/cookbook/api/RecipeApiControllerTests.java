@@ -61,7 +61,7 @@ public class RecipeApiControllerTests {
 	public void test_getAll_creates_new_returnList_when_title_of_recipe_is_passed() {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		recipes.add(new Recipe("something", "good", "30"));
-		when(recipeRepo.findByTitleContaining("something")).thenReturn(recipes);
+		when(recipeRepo.findByTitleContainingIgnoreCase("something")).thenReturn(recipes);
 		
 		List<Recipe> result = recipeController.getAll("something");
 		

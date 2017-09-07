@@ -42,12 +42,11 @@ public class RecipeApiController {
 	@ApiOperation(value="Get a list of all of the recipes or search by title")	
 	@GetMapping("")
 	public List<Recipe> getAll(String title) {
-		title.toLowerCase();
 		List<Recipe> returnList;
 		if (title != null) {
-			returnList = recipeRepo.findByTitleContaining(title);
+			returnList = recipeRepo.findByTitleContainingIgnoreCase(title);
 		} else {
-		returnList = recipeRepo.findAll();
+			returnList = recipeRepo.findAll();
 		}
 		return returnList;
 	}
