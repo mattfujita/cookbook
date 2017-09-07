@@ -196,7 +196,7 @@ public class RecipeApiControllerTests {
 	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_ingredient_found( ) {
-		
+		when(recipeRepo.findOne(1L)).thenThrow(new EmptyResultDataAccessException(0));
 		when(ingredientsRepo.findOne(10L)).thenThrow(new EmptyResultDataAccessException(0));
 		
 		Recipe result = recipeController.delete(10L);
@@ -221,8 +221,7 @@ public class RecipeApiControllerTests {
 	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_instruction_found( ) {
-//		Recipe recipe = new Recipe();
-//		when(recipeRepo.findOne(11L)).thenReturn(recipe);
+		when(recipeRepo.findOne(11L)).thenThrow(new EmptyResultDataAccessException(0));
 		when(instructionsRepo.findOne(12L)).thenThrow(new EmptyResultDataAccessException(0));
 		
 		Recipe result = recipeController.delete(12L);
