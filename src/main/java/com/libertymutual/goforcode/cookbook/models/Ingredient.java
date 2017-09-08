@@ -30,7 +30,7 @@ public class Ingredient {
 	
 	private String ingredientQuantity;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private Recipe recipes;
 	
 	public Ingredient() {}
