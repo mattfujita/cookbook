@@ -250,7 +250,7 @@ public class RecipeApiControllerTests {
 	}
 	
 	@Test
-	public void test_update_ingredient_EmptyResultDataAccessException_when_no_ingredient_found( ) {
+	public void test_update_ingredient_EmptyResultDataAccessException_when_no_ingredient_found() {
 		Recipe recipe = new Recipe();
 		Ingredient ingredient = new Ingredient();
 		when(recipeRepo.findOne(33L)).thenReturn(recipe);
@@ -260,6 +260,36 @@ public class RecipeApiControllerTests {
 		
 		assertThat(result).isSameAs(recipe);
 		verify(recipeRepo).findOne(33L);
+	}
+	
+	@Test
+	public void test_updating_instruction_on_recipe() {
+		Recipe recipe = new Recipe();
+		Instruction instruction = new Instruction();
+		instruction.setId(8L);
+		instruction.setRecipe(recipe);
+		when(recipeRepo.findOne(2L)).thenReturn(recipe);
+		when(instructionsRepo.save(instruction)).thenReturn(instruction);
+		
+		Recipe result = recipeController.updateInstruction(2L, 8L, instruction);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(2L);
+		verify(instructionsRepo).save(instruction);
+		
+	}
+	
+	@Test
+	public void test_update_instruction_EmptyResultDataAccessException_when_no_instruction_found() {
+		Recipe recipe = new Recipe();
+		Instruction instruction = new Instruction();
+		when(recipeRepo.findOne(43L)).thenReturn(recipe);
+		when(instructionsRepo.findOne(42L)).thenThrow(new EmptyResultDataAccessException(0));
+		
+		Recipe result = recipeController.updateInstruction(43L, 42L, instruction);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(43L);
 	}
 }
 	
