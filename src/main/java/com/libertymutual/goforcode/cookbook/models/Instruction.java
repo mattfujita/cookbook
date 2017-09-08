@@ -29,7 +29,7 @@ public class Instruction {
 	@Column(nullable=false, length = 255)
 	private String instructionText;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	Recipe recipe;
 	
 	public Instruction() {}
