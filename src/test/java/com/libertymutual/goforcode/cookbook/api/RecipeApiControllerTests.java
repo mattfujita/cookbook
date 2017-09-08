@@ -2,7 +2,6 @@ package com.libertymutual.goforcode.cookbook.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -194,16 +193,17 @@ public class RecipeApiControllerTests {
 		
 	}
 	
+	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_ingredient_found( ) {
 		Recipe recipe = new Recipe();
-		when(recipeRepo.findOne(11L)).thenReturn(recipe);
-		when(ingredientsRepo.findOne(12L)).thenThrow(new EmptyResultDataAccessException(0));
+		recipe.setId(1L);
+		doThrow(new EmptyResultDataAccessException(0)).when(ingredientsRepo).delete(3L);
 		
-		Recipe result = recipeController.deleteIngredient(11L, 12L);
+		Recipe result = recipeController.deleteIngredient(1L, 3L);
 		
-		assertThat(result).isSameAs(recipe);
-		verify(recipeRepo).findOne(11L);
+		assertThat(result).isNull();
+		verify(recipeRepo).findOne(1L);
 	}
 	
 	@Test
@@ -220,16 +220,17 @@ public class RecipeApiControllerTests {
 		verify(instructionsRepo).delete(7L);
 	}
 	
+	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_instruction_found( ) {
 		Recipe recipe = new Recipe();
-		when(recipeRepo.findOne(11L)).thenReturn(recipe);
-		when(instructionsRepo.findOne(12L)).thenThrow(new EmptyResultDataAccessException(0));
+		recipe.setId(1L);
+		doThrow(new EmptyResultDataAccessException(0)).when(instructionsRepo).delete(3L);
 		
-		Recipe result = recipeController.deleteInstruction(11L, 12L);
+		Recipe result = recipeController.deleteInstruction(1L, 3L);
 		
-		assertThat(result).isSameAs(recipe);
-		verify(recipeRepo).findOne(11L);
+		assertThat(result).isNull();
+		verify(recipeRepo).findOne(1L);
 	}
 	
 	@Test
@@ -250,19 +251,6 @@ public class RecipeApiControllerTests {
 	}
 	
 	@Test
-	public void test_update_ingredient_EmptyResultDataAccessException_when_no_ingredient_found() {
-		Recipe recipe = new Recipe();
-		Ingredient ingredient = new Ingredient();
-		when(recipeRepo.findOne(33L)).thenReturn(recipe);
-		when(ingredientsRepo.findOne(22L)).thenThrow(new EmptyResultDataAccessException(0));
-		
-		Recipe result = recipeController.updateIngredient(33L, ingredient, 22L);
-		
-		assertThat(result).isSameAs(recipe);
-		verify(recipeRepo).findOne(33L);
-	}
-	
-	@Test
 	public void test_updating_instruction_on_recipe() {
 		Recipe recipe = new Recipe();
 		Instruction instruction = new Instruction();
@@ -277,19 +265,6 @@ public class RecipeApiControllerTests {
 		verify(recipeRepo).findOne(2L);
 		verify(instructionsRepo).save(instruction);
 		
-	}
-	
-	@Test
-	public void test_update_instruction_EmptyResultDataAccessException_when_no_instruction_found() {
-		Recipe recipe = new Recipe();
-		Instruction instruction = new Instruction();
-		when(recipeRepo.findOne(43L)).thenReturn(recipe);
-		when(instructionsRepo.findOne(42L)).thenThrow(new EmptyResultDataAccessException(0));
-		
-		Recipe result = recipeController.updateInstruction(43L, 42L, instruction);
-		
-		assertThat(result).isSameAs(recipe);
-		verify(recipeRepo).findOne(43L);
 	}
 }
 	
