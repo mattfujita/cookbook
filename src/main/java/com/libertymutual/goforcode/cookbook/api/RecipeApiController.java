@@ -94,8 +94,6 @@ public class RecipeApiController {
 		Recipe recipe = recipeRepo.findOne(id);
 		ingredient.setRecipes(recipe);
 		ingredient = ingredientsRepo.save(ingredient);
-		
-		recipe.addIngredient(ingredient);
 
 		return recipe;
 	}
@@ -106,8 +104,6 @@ public class RecipeApiController {
 		Recipe recipe = recipeRepo.findOne(id);
 		instruction.setRecipe(recipe);
 		instruction = instructionRepo.save(instruction);
-		
-		recipe.addInstruction(instruction);
 
 		return recipe;
 	}
