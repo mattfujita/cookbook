@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.cookbook.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Instruction {
 	@Column(nullable=false, length = 255)
 	private String instructionText;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	Recipe recipe;
 	
 	public Instruction() {}

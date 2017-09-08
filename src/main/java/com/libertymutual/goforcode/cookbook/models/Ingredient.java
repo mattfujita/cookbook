@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.cookbook.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Ingredient {
 	
 	private String ingredientQuantity;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Recipe recipes;
 	
 	public Ingredient() {}
