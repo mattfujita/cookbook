@@ -38,12 +38,12 @@ public class Recipe {
 	
 	private String pictureURL = "https://cdn.shopify.com/s/files/1/0267/4223/products/hangry-hulk-t-shirt-teeturtle-marvel_800x.jpg?v=1475788449";
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="recipes", cascade = CascadeType.ALL, orphanRemoval=true)
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="recipes", cascade = CascadeType.ALL)
 	private List<Ingredient> ingredients;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, orphanRemoval=true)
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL)
 	private List<Instruction> instructions;
 	 
 	public Recipe() {}
