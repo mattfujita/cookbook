@@ -44,9 +44,9 @@ public class RecipeApiController {
 	public List<Recipe> getAll(String title) {
 		List<Recipe> returnList;
 		if (title != null) {
-			returnList = recipeRepo.findByTitleContaining(title);
+			returnList = recipeRepo.findByTitleContainingIgnoreCase(title);
 		} else {
-		returnList = recipeRepo.findAll();
+			returnList = recipeRepo.findAll();
 		}
 		return returnList;
 	}
@@ -94,8 +94,6 @@ public class RecipeApiController {
 		Recipe recipe = recipeRepo.findOne(id);
 		ingredient.setRecipes(recipe);
 		ingredient = ingredientsRepo.save(ingredient);
-		
-		recipe.addIngredient(ingredient);
 
 		return recipe;
 	}
@@ -106,8 +104,6 @@ public class RecipeApiController {
 		Recipe recipe = recipeRepo.findOne(id);
 		instruction.setRecipe(recipe);
 		instruction = instructionRepo.save(instruction);
-		
-		recipe.addInstruction(instruction);
 
 		return recipe;
 	}
@@ -115,15 +111,16 @@ public class RecipeApiController {
 	@DeleteMapping("{id}/ingredients/{ing_id}")
 	@ApiOperation(value="Delete ingredient from recipe", notes = "This will delete a new instruction to the specified recipe.")
 	public Recipe deleteIngredient(@PathVariable long id, @PathVariable long ing_id) {
-		try {
+		try {	
 			Recipe recipe = recipeRepo.findOne(id);
-			ingredientsRepo.delete(ing_id);
+			ingredientsRepo.delete(ing_id);			
 			return recipe;
 		} catch (EmptyResultDataAccessException erdae) {
 			return null;
 		}
 		
 	}
+	
 	
 	@DeleteMapping("{id}/instructions/{ins_id}")
 	public Recipe deleteInstruction(@PathVariable long id, @PathVariable long ins_id) {
@@ -135,6 +132,29 @@ public class RecipeApiController {
 		} catch (EmptyResultDataAccessException erdae) {
 			return null;
 		}
+	}
+	
+	@ApiOperation(value="Update the ingredient")
+	@PutMapping("{id}/ingredients/{ing_id}")
+	public Recipe updateIngredient(@PathVariable long id, @RequestBody Ingredient ingredient, @PathVariable long ing_id){
+
+			Recipe recipe = recipeRepo.findOne(id);		
+			ingredient.setId(ing_id);
+			ingredient.setRecipes(recipe);
+			ingredientsRepo.save(ingredient);
+			return recipe;
+	}
+	
+	
+	@ApiOperation(value="Update the instruction on a recipe")
+	@PutMapping("{id}/instructions/{ins_id}")
+	public Recipe updateInstruction(@PathVariable long id, @PathVariable long ins_id, @RequestBody Instruction instruction){
+
+			Recipe recipe = recipeRepo.findOne(id);
+			instruction.setId(ins_id);
+			instruction.setRecipe(recipe);
+			instructionRepo.save(instruction);	
+			return recipe;		
 	}
 
 }

@@ -37,5 +37,35 @@ public class RecipeTests {
 		assertThat(recipe.getMinutes()).isEqualTo("30");
 		
 	}
+	
+	@Test
+	public void test_addIngredient_works() {
+		//Arrange
+		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+		Ingredient ingredient = new Ingredient();
+		ingredients.add(ingredient);
+		
+		//Act
+		recipe.addIngredient(ingredient);
+		
+		//Assert
+		assertThat(ingredients.size()).isEqualTo(1);
+		assertThat(ingredients.get(0)).isSameAs(ingredient);
+	}
+	
+	@Test
+	public void test_addInstruction_works() {
+		//Arrange
+		ArrayList<Instruction> instructions = new ArrayList<Instruction>();
+		Instruction instruction = new Instruction();
+		instructions.add(instruction);
+		
+		//Act
+		recipe.addInstruction(instruction);
+			
+		//Assert
+		assertThat(instructions.size()).isEqualTo(1);
+		assertThat(instructions.get(0)).isSameAs(instruction);
+	}
 
 }

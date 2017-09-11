@@ -2,6 +2,7 @@ package com.libertymutual.goforcode.cookbook.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,12 +36,14 @@ public class Recipe {
 	@Column(nullable=false)
 	private String minutes;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="recipes")
+	private String pictureURL = "https://cdn.shopify.com/s/files/1/0267/4223/products/hangry-hulk-t-shirt-teeturtle-marvel_800x.jpg?v=1475788449";
+	
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="recipes", cascade = CascadeType.ALL)
 	private List<Ingredient> ingredients;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="recipe")
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="recipe", cascade = CascadeType.ALL)
 	private List<Instruction> instructions;
 	 
 	public Recipe() {}
@@ -111,6 +114,14 @@ public class Recipe {
 
 	public void setInstructions(List<Instruction> instructions) {
 		this.instructions = instructions;
+	}
+
+	public String getPictureURL() {
+		return pictureURL;
+	}
+
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
 	}
 	
 }

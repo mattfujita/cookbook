@@ -10,5 +10,5 @@ import com.libertymutual.goforcode.cookbook.models.Recipe;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-	List<Recipe> findByTitleContaining(String title);
+	List<Recipe> findByTitleContainingIgnoreCase(String title);
 }

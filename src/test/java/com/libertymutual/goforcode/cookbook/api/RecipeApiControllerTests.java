@@ -2,7 +2,6 @@ package com.libertymutual.goforcode.cookbook.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -61,7 +60,7 @@ public class RecipeApiControllerTests {
 	public void test_getAll_creates_new_returnList_when_title_of_recipe_is_passed() {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		recipes.add(new Recipe("something", "good", "30"));
-		when(recipeRepo.findByTitleContaining("something")).thenReturn(recipes);
+		when(recipeRepo.findByTitleContainingIgnoreCase("something")).thenReturn(recipes);
 		
 		List<Recipe> result = recipeController.getAll("something");
 		
@@ -136,7 +135,7 @@ public class RecipeApiControllerTests {
 	}
 	
 	@Test
-	public void test_update_sets_movie_id_and_saves_to_Movie_Repo() {
+	public void test_update_sets_recipe_id_and_saves_to_recipe_Repo() {
 		//Arrange
 		Recipe recipe = new Recipe();
 		when(recipeRepo.save(recipe)).thenReturn(recipe);
@@ -194,15 +193,17 @@ public class RecipeApiControllerTests {
 		
 	}
 	
+	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_ingredient_found( ) {
-		when(recipeRepo.findOne(1L)).thenThrow(new EmptyResultDataAccessException(0));
-		when(ingredientsRepo.findOne(10L)).thenThrow(new EmptyResultDataAccessException(0));
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		doThrow(new EmptyResultDataAccessException(0)).when(ingredientsRepo).delete(3L);
 		
-		Recipe result = recipeController.delete(10L);
+		Recipe result = recipeController.deleteIngredient(1L, 3L);
 		
 		assertThat(result).isNull();
-		verify(recipeRepo).findOne(10L);
+		verify(recipeRepo).findOne(1L);
 	}
 	
 	@Test
@@ -219,15 +220,51 @@ public class RecipeApiControllerTests {
 		verify(instructionsRepo).delete(7L);
 	}
 	
+	
 	@Test
 	public void test_delete_EmptyResultDataAccessException_when_no_instruction_found( ) {
-		when(recipeRepo.findOne(11L)).thenThrow(new EmptyResultDataAccessException(0));
-		when(instructionsRepo.findOne(12L)).thenThrow(new EmptyResultDataAccessException(0));
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		doThrow(new EmptyResultDataAccessException(0)).when(instructionsRepo).delete(3L);
 		
-		Recipe result = recipeController.delete(12L);
+		Recipe result = recipeController.deleteInstruction(1L, 3L);
 		
 		assertThat(result).isNull();
-		verify(recipeRepo).findOne(12L);
+		verify(recipeRepo).findOne(1L);
+	}
+	
+	@Test
+	public void test_updating_ingredient_on_recipe() {
+		Recipe recipe = new Recipe();
+		Ingredient ingredient = new Ingredient();
+		ingredient.setId(3L);
+		ingredient.setRecipes(recipe);
+		when(recipeRepo.findOne(2L)).thenReturn(recipe);
+		when(ingredientsRepo.save(ingredient)).thenReturn(ingredient);
+		
+		Recipe result = recipeController.updateIngredient(2L, ingredient, 3L);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(2L);
+		verify(ingredientsRepo).save(ingredient);
+		
+	}
+	
+	@Test
+	public void test_updating_instruction_on_recipe() {
+		Recipe recipe = new Recipe();
+		Instruction instruction = new Instruction();
+		instruction.setId(8L);
+		instruction.setRecipe(recipe);
+		when(recipeRepo.findOne(2L)).thenReturn(recipe);
+		when(instructionsRepo.save(instruction)).thenReturn(instruction);
+		
+		Recipe result = recipeController.updateInstruction(2L, 8L, instruction);
+		
+		assertThat(result).isSameAs(recipe);
+		verify(recipeRepo).findOne(2L);
+		verify(instructionsRepo).save(instruction);
+		
 	}
 }
 	
