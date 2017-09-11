@@ -23,16 +23,18 @@ function fillInDetails(data) {
 	`;
 	
 	for (let instruction of data.instructions) {
-		$('<li></li>')
+		//$('<li></li>')
 		html += `
+			<li>
 			<div>
 				<b>${instruction.stepNumber}</b>
 				<div>${instruction.instructionText}<div>
 				
-			<form class="delete-instruction-form" method="post" action="/api/${recipe.id}/instructions/${instruction.id}">
+			<form class="delete-instruction-form" method="post" action="/api/recipes/${data.id}/instructions/${instruction.id}">
     		  	<button>Delete</button>
     		</form>
     		  </div>	
+			</li>
 		`;
 	}
 	
@@ -50,11 +52,17 @@ function fillInDetails(data) {
 	
 	for (let ingredient of data.ingredients) {
 		html += `
+			<li>
 			<div>
 				<b>${ingredient.ingredientName}</b>
 				<div>${ingredient.measureUnit}<div>
 				<div>${ingredient.ingredientQuantity}<div>
+				
+				<form class="delete-ingredient-form" method="post" action="/api/recipes/${data.id}/ingredients/${ingredient.id}">
+    		  	<button>Delete</button>
+    		</form>
 			</div>
+			</li>
 		`;
 	}
 	
@@ -193,6 +201,20 @@ $(document).on('submit', '#create-ingredient-form', function (e) {
     })
   //arrow function syntax
     .fail(error => console.error(error)); 
+});
+
+//delete ingredient
+$(document).on('submit', '.delete-ingredient-form', function (e) {
+	e.preventDefault();
+	
+	//this crafts our own http request of delete
+	$.ajax(this.action, { type: 'DELETE' }) //inline object type: DELETE; if we did a PUT, we'd need a payload
+	.done(() => {
+		$(this) //form element
+			.closest('li') //traverse up html tree to find closest li tag
+			.remove();
+	})
+	.fail(error => console.error(error));
 });
 
 		
