@@ -8,6 +8,19 @@
 </head>
 
 <body>
+	<form id="create-recipe-form" method="post" action="/api/recipes">
+		<input required type="text" id="title" name="title" placeholder="Recipe title">
+		<br>
+		<textarea required id="description" name="description" placeholder="description">
+	</textarea>
+		<br>
+		<input required type="text" id="minutes" name="minutes" placeholder="minutes">
+		<br>
+		<input type="text" id="pictureURL" name="pictureURL" placeholder="pictureURL">
+		<br>
+		<button>Create</button>
+	</form>
+
 	<ul id="recipe-list"></ul> <!-- dynamic content here -->
 	<div id="recipe-detail"></div>
 	
